@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-05-14T20:15:29.713191",
+  "model": "qwen2.5:7b",
+  "cases": [
+    {
+      "file": "sgf_samples/opening_sample.sgf",
+      "move": 7,
+      "exit_code": 0,
+      "target": "第7手: 黑棋 qn -> (17,14) / 右边三线附近",
+      "review_length": 212,
+      "min_100_ok": true,
+      "fallback_hint": "possible"
+    },
+    {
+      "file": "sgf_samples/middlegame_sample.sgf",
+      "move": 22,
+      "exit_code": 0,
+      "target": "第22手: 白棋 oi -> (15,9) / 边向中腹过渡地带",
+      "review_length": 214,
+      "min_100_ok": true,
+      "fallback_hint": "possible"
+    },
+    {
+      "file": "sgf_samples/endgame_sample.sgf",
+      "move": 34,
+      "exit_code": 0,
+      "target": "第34手: 白棋 np -> (14,16) / 边向中腹过渡地带",
+      "review_length": 215,
+      "min_100_ok": true,
+      "fallback_hint": "possible"
+    }
+  ],
+  "all_pass": true
+}
