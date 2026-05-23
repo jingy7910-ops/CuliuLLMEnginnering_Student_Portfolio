@@ -1,0 +1,51 @@
+今日完成内容：
+
+写了 registry_leader_demo.py
+
+扫描 skills/ 目录下的 4 个 SKILL.md
+按字段解析：
+skill_name
+responsibility
+non_responsibility
+input_schema
+output_schema
+trigger_examples
+avoid_examples
+failure_modes
+形成结构化 registry，供 Router 使用
+写了 Router.py
+
+基于 registry 和用户输入，让大模型判断应该调用哪个 Skill
+输出结构化 route decision：
+selected_skill
+reason
+confidence
+status
+当 selected_skill 不为空时，自动调用对应 handler.py
+展示 skill input 和 skill output
+增加了 route log 记录
+完成前后端分离 Demo
+
+后端使用 Flask
+前端使用 HTML + CSS + JS
+前端可以输入用户请求，展示：
+Router Result
+Skill Input
+Skill Output
+Route Cases
+增加了 5 条固定测试样例
+修复了路由不稳定的问题
+
+之前“我不会这题”会被错误路由到 StudyPlanSkill
+修复后它会返回 needs_clarification
+5 条 route cases 现在都能通过 Expected
+美化了网页界面
+
+优化了整体布局
+增强了状态条、结果面板、代码块和测试用例区域的视觉层次
+页面更适合课堂展示和调试
+今日收获：
+
+我对 Router 的理解更清楚了：Router 不应该直接回答用户，而是先做结构化决策，说明选了什么 Skill、为什么选、置信度多少、是否需要澄清。route decision 是中间产物，只有当它足够明确时，系统才应该继续调用对应的 handler。
+
+同时也发现，仅靠大模型判断会有不稳定性，所以需要加入规则校验和固定测试样例，保证关键 case 能稳定通过。
