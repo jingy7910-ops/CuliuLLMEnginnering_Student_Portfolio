@@ -1,0 +1,16 @@
+目标: 为第10课实现并规范化一个基于大模型的 Planner，生成结构化的 execution_plan（步骤类型：skill_call / tool_call / memory_read / memory_write），并把 Planner 做成可运行的演示（CLI + Web UI）。
+
+关键实现:
+
+Lesson10_student_workbook.md: 完成 A1、B1/B2、S1–S7（工具合约、记忆 schema、Planner 规则等）。
+planner.py: LLM-first 的 Planner，实现 generate_plan(user_request, registry=...)，调用在线模型（通过 test_connect1 风格的 HTTP 接口），返回规范化的 JSON 计划；已移除离线回退（在线优先，模型不可达则报错）。
+planner_demo.py: CLI 演示脚本，用于本地测试 generate_plan。
+web_app.py: 新增的 Flask 演示服务器，提供界面 / 和 API /api/plan，会调用 generate_plan 并返回 Planner 输出。
+技能/工具注册: 使用 skills/*/SKILL.md 与 registry_loader 构建 system prompt 上下文。
+
+prompt 上下文。
+测试情况（对 6 个 Part E 用例的结果简要）：
+
+大多数用例在接入在线模型后能返回 LLM 生成的 JSON 计划（例如：检索概念 → 制定训练计划、生成不泄露答案的提示等）。
+若模型不可达，Planner 会返回错误（已按要求禁用离线启发式回退）。
+个别用例（如请求“给我三道普及难度的二分题”）模型返回空 steps，需要进一步强化 prompt 或规则以确保生成相应的 tool_call 步骤。
