@@ -1,0 +1,39 @@
+本次完成了 Lesson11_agent_demo 的网页版和后端能力接入。
+主要实现：
+新增 Trace / Span：
+每次请求生成 trace_id
+写入 logs/traces/{trace_id}.jsonl
+span 链路包含 request -> input_guard -> planner -> executor_step -> output_guard -> final_answer
+
+新增 Guardrail：
+input_guard
+tool_guard
+output_guard
+越权、泄露系统提示词、危险工具、危险输出都会被拦截并写 trace
+
+新增 Fallback：
+planner_failed
+tool_call_failure
+memory_read_failure
+skill_output_unsafe
+fallback 时会写 fallback span
+
+主要文件：
+trace_logger.py
+safety_guard.py
+fallback_policy.py
+pipeline_demo.py
+executor.py
+app.py
+static/index.html
+static/app.js
+static/styles.css
+WORKBOOK_EVIDENCE.md
+验证过：
+正常请求：ok
+input guard：blocked
+planner fallback：fallback
+tool fallback：fallback
+output fallback：fallback
+/api/run 可生成 trace
+/api/trace/<trace_id> 可读取完整 span 链路
