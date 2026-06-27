@@ -1,0 +1,25 @@
+今天我们把 Lesson13_student_project_team_demo 的协作控制层从 baseline 推到了一个更完整的版本，主要做了三轮：
+Fork / Join
+ResearchAgent 和 Planner Phase 1 改成真正并行启动。
+Join 不再无脑 Merge，而是根据 success / partial / failed / timeout 决定 proceed / degraded / fallback / stop。
+Planner Phase 1 failed 时禁止 Merge。
+
+Merge / Review 上下文
+merge_request 现在保留用户目标、成功标准、骨架、证据、uncertainty 和 missing_information。
+review_request 不再只给 plan_draft，而是把目标、证据、不确定性、骨架和计划一起给 Reviewer。
+partial evidence 的 uncertainty 能传到最终计划里。
+
+Reviewer 控制动作 + 返工上限
+Reviewer pass -> accept。
+Reviewer revise -> 最多触发一次 Planner Revision，然后二次 Review。
+第二次仍 revise 或 Reviewer reject/failed -> fallback。
+collaboration_log 记录多轮 review 决策和 revision 次数。
+
+验证过的 Case：
+case_01 passed
+case_02 passed
+case_03 passed
+case_04 passed
+case_05 passed
+case_06 passed
+遵守了边界：没有改 agents/、prompts/、fixtures/、runtime/、lesson13_cases.py 或 collaboration_health.py。
